@@ -4,6 +4,7 @@ services:
   web:
     image: "${DHIS2_IMAGE:-dhis2/core-dev:local}"
     restart: "always"
+    user: "1000:1000"
     ports:
       - 8080:8080 # DHIS2
       - 8081:8081 # Debugger: connect using commandline flag -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8081
@@ -11,7 +12,8 @@ services:
     volumes:
       - ./docker/dhis.conf:${DHIS2_HOME:-/DHIS2_home}/dhis.conf:ro
       - ./docker/log4j2.xml:${DHIS2_HOME:-/DHIS2_home}/log4j2.xml:ro
-      - /mnt/disks/disk1/dhis2:${DHIS2_HOME:-/DHIS2_home}:rw
+      #- /mnt/disks/disk1/dhis2:${DHIS2_HOME:-/DHIS2_home}:rw
+      - dhis2_data:${DHIS2_HOME:-/DHIS2_home}:rw
     environment:
       DHIS2_HOME: ${DHIS2_HOME:-/DHIS2_home}
       JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8081 \
@@ -47,10 +49,9 @@ networks:
   web:
     external: true
 
-#volumes:
-#  dhis2_data:
-#    driver: local
-#    driver_opts:
-#      type: none
-#      device: /mnt/disks/disk1/dhis2
-#      o: bind
+volumes:
+  dhis2_data: 
+    driver_opts:
+      type: cifs
+      o: username=srtakada@DOH,password=S31g1RT4k4d4,uid=1000,gid=1000,dir_mode=0775,vers=3.1.1
+      device: //10.11.132.178/ssed2/disks/applications/dhis2
