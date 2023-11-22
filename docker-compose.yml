@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  web:
+  dhis2:
     image: "${DHIS2_IMAGE:-dhis2/core-dev:local}"
     restart: "always"
     user: "1000:1000"
@@ -28,6 +28,8 @@ services:
     #command: sh -c "sudo chown 1000:1000 /opt/dhis2"
     labels:
       - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.backend=dhis2
       - traefik.http.middlewares.redirect-web-secure.redirectscheme.scheme=https
       - traefik.http.middlewares.https-redirect.headers.customrequestheaders.X-Forwarded-Proto=https
       - traefik.http.middlewares.csrf.headers.customRequestHeaders.X-CSRF-Token=71eac59bbe12ce53f3dd1b6d7228fe4daa3016b388963fb84d371eed5ba78d18
@@ -45,9 +47,11 @@ services:
       - traefik.http.routers.dhis-web-secure.service=dhis-service
       - traefik.http.services.dhis-service.loadbalancer.server.port=8080
     networks:
-      - web
+      - monitor-net
 networks:
-  web:
+  monitor-net:
+    external: true
+  traefik:
     external: true
 
 volumes:
