@@ -13,7 +13,8 @@ services:
       - ./docker/dhis.conf:${DHIS2_HOME:-/DHIS2_home}/dhis.conf:ro
       - ./docker/log4j2.xml:${DHIS2_HOME:-/DHIS2_home}/log4j2.xml:ro
       #- /mnt/disks/disk1/dhis2:${DHIS2_HOME:-/DHIS2_home}:rw
-      - dhis2_data:${DHIS2_HOME:-/DHIS2_home}:rw
+      #- dhis2_data:${DHIS2_HOME:-/DHIS2_home}:rw
+      - /mnt/disks/dhis2:${DHIS2_HOME:-/DHIS2_home}:rw
     environment:
       DHIS2_HOME: ${DHIS2_HOME:-/DHIS2_home}
       JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8081 \
