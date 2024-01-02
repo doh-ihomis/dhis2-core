@@ -1,4 +1,23 @@
+# Docker
+
 DHIS2_IMAGE=dhis2/core:2.40.1 docker compose up -d
+
+
+# /etc/fstab
+
+//10.11.132.178/ssed2/disks/applications/dhis2 /mnt/disks/dhis2 cifs vers=3.1.1,uid=1000,gid=1000,dir_mode=0775,credentials=/root/.smbcredentials
+
+
+# Mount Folders
+
+sudo mount -t cifs -o rw,uid=$(id -u),gid=$(id -g),vers=3.1.1,dir_mode=0775,credentials=/root/.smbcredentials //10.11.132.178/ssed2/disks/applications/dhis2 /mnt/disks/dhis2
+sudo umount /mnt/disks/dhis2
+
+
+# Domains
+
+https://hmis.doh.gov.ph
+
 
 # DHIS 2
 

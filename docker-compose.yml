@@ -54,9 +54,9 @@ networks:
   traefik:
     external: true
 
-volumes:
-  dhis2_data: 
-    driver_opts:
-      type: cifs
-      o: username=srtakada@DOH,password=S31g1RT4k4d4,uid=1000,gid=1000,dir_mode=0775,vers=3.1.1
-      device: //10.11.132.178/ssed2/disks/applications/dhis2
+#volumes:
+#  dhis2_data: 
+#    driver_opts:
+#      type: cifs
+#      o: username=srtakada@DOH,password=S31g1RT4k4d4,uid=1000,gid=1000,dir_mode=0775,vers=3.1.1
+#      device: //10.11.132.178/ssed2/disks/applications/dhis2
